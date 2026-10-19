@@ -35,7 +35,10 @@ function setMenu(open) {
   nav.classList.toggle('is-open', open);
   navToggle.setAttribute('aria-expanded', String(open));
   navToggle.setAttribute('aria-label', open ? 'Zatvori meni' : 'Otvori meni');
+  document.documentElement.classList.toggle('menu-open', open);
 }
+addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
+matchMedia('(min-width: 761px)').addEventListener('change', (e) => { if (e.matches) setMenu(false); });
 navToggle.addEventListener('click', () => setMenu(!nav.classList.contains('is-open')));
 $$('a', nav).forEach((a) => a.addEventListener('click', () => setMenu(false)));
 
@@ -279,8 +282,5 @@ $$('[data-send]', form).forEach((btn) => {
     }
   });
 });
-
-// Viber dugme u mobilnoj traci otvara razgovor bez poruke
-$$('[data-viber]').forEach((a) => { a.href = viberUrl(''); });
 
 setType('frizura');

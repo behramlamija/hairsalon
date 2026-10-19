@@ -270,9 +270,6 @@ p { margin: 0 0 1em; }
 .footer a:hover { color: var(--white); }
 .footer .small { color: #8f8387; }
 
-/* Mobilna traka */
-.quickbar { display: none; }
-
 /* Lightbox */
 .lightbox { border: 0; padding: 0; background: transparent; max-width: min(92vw, 900px); max-height: 90vh; overflow: visible; }
 .lightbox::backdrop { background: rgba(20, 14, 16, .88); }
@@ -403,10 +400,9 @@ p { margin: 0 0 1em; }
 .preview pre.is-updated { animation: flash .6s ease; }
 .form__error:not([hidden]) { animation: shake .4s ease; }
 
-/* Lightbox i mobilna traka */
+/* Lightbox */
 .lightbox[open] .lightbox__body { animation: zoomIn .45s var(--ease); }
 .lightbox[open]::backdrop { animation: fade .4s ease; }
-.quickbar { animation: slideUp .6s 1.6s var(--ease) both; }
 
 @keyframes write { to { clip-path: inset(0 0 0 0); } }
 @keyframes lineUp { to { transform: none; } }
@@ -427,7 +423,6 @@ p { margin: 0 0 1em; }
 @keyframes zoomIn { from { opacity: 0; transform: scale(.88); } to { opacity: 1; transform: none; } }
 @keyframes flash { 0% { background: rgba(180, 84, 106, .14); } 100% { background: transparent; } }
 @keyframes shake { 0%, 100% { transform: none; } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
-@keyframes slideUp { from { transform: translateY(100%); } to { transform: none; } }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -452,17 +447,30 @@ p { margin: 0 0 1em; }
 }
 
 @media (max-width: 760px) {
-  body { font-size: 16px; padding-bottom: 64px; }
+  body { font-size: 16px; }
   .section { padding: 72px 0; }
   .nav-toggle { display: block; }
+  /* Meni preko cijelog ekrana: lagano se pojavi (fade), linkovi ulaze jedan po jedan */
   .nav {
-    position: fixed; inset: 76px 0 auto 0; flex-direction: column; gap: 6px; padding: 18px 16px 26px;
-    background: var(--ivory); border-bottom: 1px solid var(--line);
-    transform: translateY(-120%); transition: transform .3s; z-index: -1;
+    position: fixed; top: 76px; left: 0; right: 0; height: calc(100dvh - 76px);
+    flex-direction: column; justify-content: center; gap: 4px; padding: 24px 16px 48px;
+    background:
+      radial-gradient(ellipse at 80% 0%, var(--blush), transparent 60%),
+      var(--ivory);
+    opacity: 0; visibility: hidden; transition: opacity .35s ease, visibility 0s .35s;
   }
-  .nav.is-open { transform: none; }
-  .nav a:not(.btn) { padding: 10px 0; font-size: 1.1rem; }
-  .nav .btn { margin-top: 8px; width: 100%; }
+  .nav.is-open { opacity: 1; visibility: visible; transition: opacity .35s ease, visibility 0s; }
+  .nav a:not(.btn) { padding: 10px 0; font-family: var(--font-serif); font-size: 2rem; }
+  .nav a:not(.btn)::after { display: none; }
+  .nav .btn { margin-top: 22px; }
+  .nav > * { opacity: 0; transform: translateY(12px); transition: opacity .4s, transform .4s var(--ease); }
+  .nav.is-open > * { opacity: 1; transform: none; }
+  .nav.is-open > :nth-child(1) { transition-delay: .08s; }
+  .nav.is-open > :nth-child(2) { transition-delay: .14s; }
+  .nav.is-open > :nth-child(3) { transition-delay: .2s; }
+  .nav.is-open > :nth-child(4) { transition-delay: .26s; }
+  .nav.is-open > :nth-child(5) { transition-delay: .32s; }
+  html.menu-open { overflow: hidden; }
   .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
   .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
   .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
@@ -477,15 +485,5 @@ p { margin: 0 0 1em; }
   .grid { grid-template-columns: 1fr; }
   .send { grid-template-columns: 1fr 1fr; }
   .send .btn--viber { grid-column: 1 / -1; }
-  .quickbar {
-    display: grid; grid-template-columns: repeat(3, 1fr); position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
-    background: rgba(34, 28, 31, .96); backdrop-filter: blur(10px); padding-bottom: env(safe-area-inset-bottom);
-  }
-  .quickbar a {
-    color: var(--white); text-decoration: none; text-align: center; padding: 18px 0; font-size: .92rem;
-    letter-spacing: .05em; border-right: 1px solid rgba(255, 255, 255, .1);
-  }
-  .quickbar a:first-child { background: var(--rose); }
-  .quickbar a:last-child { border-right: 0; }
-  .toast { bottom: 84px; }
+  .toast { bottom: 24px; }
 }
