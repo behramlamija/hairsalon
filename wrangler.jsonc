@@ -1,0 +1,13 @@
+{
+  // Cloudflare Workers — statična stranica (`npm run build` pa `npx wrangler deploy`).
+  // Naziv mora biti isti kao naziv Workera u Cloudflare dashboardu.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "hairsalon",
+  "compatibility_date": "2026-10-19",
+  "assets": {
+    "directory": "dist",
+    // Nepostojeći URL-ovi dobiju dist/404.html sa statusom 404.
+    "not_found_handling": "404-page",
+    "html_handling": "auto-trailing-slash"
+  }
+}

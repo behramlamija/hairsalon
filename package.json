@@ -7,11 +7,15 @@
   "license": "UNLICENSED",
   "type": "module",
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   },
   "scripts": {
     "dev": "node build/dev.mjs",
     "build": "node build/build.mjs",
-    "preview": "node build/dev.mjs --dist"
+    "preview": "node build/dev.mjs --dist",
+    "deploy": "npm run build && wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^4.151.2"
   }
 }

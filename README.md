@@ -4,7 +4,7 @@ Statična web stranica za **Frizerski studio Ilda** (Mostar, Kocine): svadbene i
 Rezervacija bez baze i bez prijave — forma složi poruku koju klijentica pošalje na **Viber** ili **SMS** (ili pozove).
 
 - Čisti **HTML, CSS i JavaScript** (bez frameworka)
-- **Node.js samo za build** (bez dodatnih paketa)
+- **Node.js samo za build** (jedina zavisnost je `wrangler` za objavu na Cloudflare)
 
 Autor: Lamija Behram
 
@@ -14,9 +14,25 @@ Autor: Lamija Behram
 npm run dev       # http://localhost:5180 — služi src/
 npm run build     # src/ → dist/ (minificiran CSS, hash u nazivima fajlova)
 npm run preview   # služi dist/
+npm run deploy    # build + objava na Cloudflare (traži `npx wrangler login`)
 ```
 
-`dist/` se može postaviti na bilo koji statični hosting (Netlify, Cloudflare Pages, GitHub Pages, običan cPanel).
+`dist/` je izlaz builda i ne ide u git — Cloudflare ga pravi sam pri svakom pushu.
+
+## Objava na Cloudflare (Workers Builds)
+
+Konfiguracija je u `wrangler.jsonc` (Worker `hairsalon`, statični fajlovi iz `dist/`).
+U Cloudflare dashboardu: **Workers & Pages → Create → Import a repository → hairsalon**, pa:
+
+| Polje | Vrijednost |
+| --- | --- |
+| Project / Worker name | `hairsalon` (mora biti isto kao `name` u `wrangler.jsonc`) |
+| Build command | `npm run build` |
+| Deploy command | `npx wrangler deploy` |
+| Root directory | `/` |
+
+Node verzija se čita iz `.nvmrc` (22). Svaki push na `main` automatski objavi novu verziju na
+`https://hairsalon.<tvoj-subdomen>.workers.dev`.
 
 ## Struktura
 
@@ -30,6 +46,7 @@ src/
 build/
   build.mjs           build u dist/
   dev.mjs             lokalni server
+wrangler.jsonc        Cloudflare konfiguracija
 ```
 
 ## Fotografije
