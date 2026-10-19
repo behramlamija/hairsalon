@@ -23,7 +23,7 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+html { scroll-behavior: smooth; scroll-padding-top: 84px; overflow-x: hidden; overflow-x: clip; }
 body {
   margin: 0;
   font-family: var(--font-sans);
@@ -447,6 +447,9 @@ p { margin: 0 0 1em; }
 }
 
 @media (max-width: 760px) {
+  /* Na uskom ekranu animacije ulaze samo odozdo, da ništa ne viri preko ruba */
+  .reveal--left, .reveal--right { transform: translateY(26px); }
+  .split__media.reveal { transform: translateY(30px); }
   body { font-size: 16px; }
   .section { padding: 72px 0; }
   .nav-toggle { display: block; }
