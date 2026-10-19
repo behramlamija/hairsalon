@@ -1,0 +1,17 @@
+{
+  "name": "frizerski-studio-ilda",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static website for Frizerski studio Ilda, Mostar — hairstyling and live wedding drawing.",
+  "author": "Lamija Behram",
+  "license": "UNLICENSED",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "node build/dev.mjs",
+    "build": "node build/build.mjs",
+    "preview": "node build/dev.mjs --dist"
+  }
+}
