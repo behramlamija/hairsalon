@@ -1,4 +1,4 @@
-// Frizerski studio Ilda — interakcije (bez frameworka, bez backend-a)
+// Frizerski studio Ilda - interakcije (bez frameworka, bez backend-a)
 
 const STUDIO = {
   phone: '+38761577529',
@@ -188,22 +188,22 @@ function buildMessage() {
 
   if (type === 'frizura') {
     lines.push(`Pozdrav ${STUDIO.name}, želim rezervisati termin za frizuru.`, '');
-    lines.push(`Usluga: ${v('usluga') || '—'}`);
-    lines.push(`Datum: ${formatDate(v('datum')) || '—'}`);
+    lines.push(`Usluga: ${v('usluga') || '-'}`);
+    lines.push(`Datum: ${formatDate(v('datum')) || '-'}`);
     if (v('vrijeme')) lines.push(`Vrijeme: ${v('vrijeme')}`);
     if (v('osobe') && v('osobe') !== '1') lines.push(`Broj osoba: ${v('osobe')}`);
     const kosa = form.querySelector('input[name=kosa]:checked');
     if (kosa) lines.push(`Dužina kose: ${kosa.value}`);
   } else {
     lines.push(`Pozdrav ${STUDIO.name}, zanima me live crtanje na vjenčanju.`, '');
-    lines.push(`Datum vjenčanja: ${formatDate(v('datumVjencanja')) || '—'}`);
-    lines.push(`Lokacija: ${v('lokacija') || '—'}`);
+    lines.push(`Datum vjenčanja: ${formatDate(v('datumVjencanja')) || '-'}`);
+    lines.push(`Lokacija: ${v('lokacija') || '-'}`);
     lines.push(`Paket: ${v('paket')}`);
     if (v('gosti')) lines.push(`Broj gostiju: oko ${v('gosti')}`);
     if (f.kombinacija.checked) lines.push('Želim i svadbenu frizuru za mladu.');
   }
   if (v('napomena')) lines.push(`Napomena: ${v('napomena')}`);
-  lines.push('', `${v('ime') || '—'}, ${v('telefon') || '—'}`);
+  lines.push('', `${v('ime') || '-'}, ${v('telefon') || '-'}`);
   return lines.join('\n');
 }
 
@@ -230,7 +230,7 @@ function validate() {
     if (!ok && !firstInvalid) firstInvalid = el;
   });
   if (firstInvalid) {
-    errorBox.textContent = 'Molimo popunite označena polja (*) — datum ne može biti u prošlosti.';
+    errorBox.textContent = 'Molimo popunite označena polja (*) - datum ne može biti u prošlosti.';
     errorBox.hidden = false;
     firstInvalid.focus();
     return false;
@@ -274,7 +274,7 @@ $$('[data-send]', form).forEach((btn) => {
     if (btn.dataset.send === 'viber') {
       const copied = await copy(text);
       showToast(copied
-        ? 'Poruka je kopirana ✓ Otvaramo Viber — ako je polje prazno, samo zalijepite poruku.'
+        ? 'Poruka je kopirana ✓ Otvaramo Viber - ako je polje prazno, samo zalijepite poruku.'
         : 'Otvaramo Viber… Ako se poruka ne pojavi, prepišite je iz pregleda.');
       location.href = viberUrl(text);
     } else {
